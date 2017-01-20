@@ -13,7 +13,7 @@ public class HamiltonGame extends Game {
 	@Override
 	public void create () {
 		//batch = new SpriteBatch();
-		this.setScreen(new ScreenOne(this));
+		this.setScreen(new ScreenOneIntro(this));
 	}
 
 //	@Override

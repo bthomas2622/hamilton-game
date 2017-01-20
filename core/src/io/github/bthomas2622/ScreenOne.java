@@ -257,5 +257,6 @@ public class ScreenOne implements Screen, InputProcessor {
     @Override
     public void dispose(){
         stage.dispose();
+        generator.dispose();
     }
 }
