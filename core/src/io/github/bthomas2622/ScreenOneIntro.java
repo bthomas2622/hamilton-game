@@ -98,6 +98,10 @@ public class ScreenOneIntro implements Screen {
             } else {
                 timeSinceLetter += TimeUtils.nanoTime() - time;
             }
+            if(Gdx.input.isKeyPressed(Input.Keys.ENTER)){
+                game.setScreen(new ScreenOne(game));
+                dispose();
+            }
         }
 
         @Override

@@ -44,6 +44,11 @@ public class ScreenOne implements Screen, InputProcessor {
     float paragraphWidth;
     Boolean finished = false;
     Boolean seated = false;
+    Boolean nextScreen = false;
+    float opacity = (float)1;
+    float r = 1;
+    float b = 1;
+    float g = 1;
 
 
     public ScreenOne(final HamiltonGame gam){
@@ -59,12 +64,12 @@ public class ScreenOne implements Screen, InputProcessor {
 
 
     public class HamiltonActor extends Actor {
-        Texture texture = new Texture(Gdx.files.internal("hamilton.png"));
-        TextureRegion textureRegion = new TextureRegion(texture);
+        TextureRegion hamiltonTextureRegion = new TextureRegion(game.hamiltonTexture);
+        TextureRegion blackFade = new TextureRegion(game.blackBackdrop);
         float actorX = 0, actorY = 0;
 
         public HamiltonActor(){
-            setBounds(actorX, actorY, texture.getWidth(), texture.getHeight());
+            setBounds(actorX, actorY, game.hamiltonTexture.getWidth(), game.hamiltonTexture.getHeight());
         }
 
         @Override
@@ -74,14 +79,22 @@ public class ScreenOne implements Screen, InputProcessor {
             } else {
                 if (finished){
                     if(Gdx.input.isKeyPressed(Input.Keys.RIGHT)){
-                        if(this.getX() >= Gdx.graphics.getWidth() / 2  - this.getWidth() / 2 && this.getX() < Gdx.graphics.getWidth()  - this.getWidth() / 2){
-                            if (this.getX() <= Gdx.graphics.getWidth()  - this.getWidth() / 2 - 5){
+                        if(this.getX() >= Gdx.graphics.getWidth() / 2  - this.getWidth() / 2 && this.getX() < Gdx.graphics.getWidth()  + this.getWidth()){
+                            if (this.getX() <= Gdx.graphics.getWidth() + this.getWidth() - 5){
                                 this.setPosition(getX() + 5, getY());
+                            }
+                            else {
+                                if (opacity > 0){
+                                    opacity-=0.05;
+                                    r-=0.05;
+                                    g-=0.05;
+                                    b-=0.05;
+                                }
                             }
                         }
                     }
                     if(Gdx.input.isKeyPressed(Input.Keys.LEFT)){
-                        if(this.getX() >= Gdx.graphics.getWidth() / 2  - this.getWidth() / 2 && this.getX() < Gdx.graphics.getWidth()  - this.getWidth() / 2){
+                        if(this.getX() >= Gdx.graphics.getWidth() / 2  - this.getWidth() / 2 && this.getX() < Gdx.graphics.getWidth() + this.getWidth() - 5){
                             if (this.getX() >= Gdx.graphics.getWidth() / 2  - this.getWidth() / 2 + 5){
                                 this.setPosition(getX() - 5, getY());
                             }
@@ -111,7 +124,7 @@ public class ScreenOne implements Screen, InputProcessor {
         public void draw(Batch batch, float alpha) {
             Color color = getColor();
             batch.setColor(color.r, color.g, color.b, color.a * alpha);
-            batch.draw(textureRegion, getX(), getY(), getOriginX(), getOriginY(), getWidth(), getHeight(), getScaleX(), getScaleY(), getRotation());
+            batch.draw(hamiltonTextureRegion, getX(), getY(), getOriginX(), getOriginY(), getWidth(), getHeight(), getScaleX(), getScaleY(), getRotation());
         }
     }
 
