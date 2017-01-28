@@ -17,6 +17,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.scenes.scene2d.Actor;
@@ -45,10 +46,8 @@ public class ScreenOne implements Screen, InputProcessor {
     Boolean finished = false;
     Boolean seated = false;
     Boolean nextScreen = false;
-    float opacity = (float)1;
-    float r = 1;
-    float b = 1;
-    float g = 1;
+    float fadeAlpha = 0.0f;
+    Sprite blackFade;
 
 
     public ScreenOne(final HamiltonGame gam){
@@ -59,13 +58,13 @@ public class ScreenOne implements Screen, InputProcessor {
         stage.addActor(hamilton);
         stage.addActor(hurricaneWritings);
         game = gam;
+        blackFade = new Sprite(game.blackBackdrop);
         Gdx.input.setInputProcessor(this);
     }
 
 
     public class HamiltonActor extends Actor {
         TextureRegion hamiltonTextureRegion = new TextureRegion(game.hamiltonTexture);
-        TextureRegion blackFade = new TextureRegion(game.blackBackdrop);
         float actorX = 0, actorY = 0;
 
         public HamiltonActor(){
@@ -84,12 +83,7 @@ public class ScreenOne implements Screen, InputProcessor {
                                 this.setPosition(getX() + 5, getY());
                             }
                             else {
-                                if (opacity > 0){
-                                    opacity-=0.05;
-                                    r-=0.05;
-                                    g-=0.05;
-                                    b-=0.05;
-                                }
+                                nextScreen = true;
                             }
                         }
                     }
@@ -122,8 +116,8 @@ public class ScreenOne implements Screen, InputProcessor {
 
         @Override
         public void draw(Batch batch, float alpha) {
-            Color color = getColor();
-            batch.setColor(color.r, color.g, color.b, color.a * alpha);
+//            Color color = getColor();
+//            batch.setColor(color.r, color.g, color.b, color.a * alpha);
             batch.draw(hamiltonTextureRegion, getX(), getY(), getOriginX(), getOriginY(), getWidth(), getHeight(), getScaleX(), getScaleY(), getRotation());
         }
     }
@@ -178,6 +172,14 @@ public class ScreenOne implements Screen, InputProcessor {
         Gdx.gl.glClearColor(1, 1, 1, 0);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         stage.act(delta);
+        if (nextScreen & fadeAlpha < 1f){
+            fadeAlpha += .01f;
+            blackFade.setColor(blackFade.getColor().r, blackFade.getColor().g, blackFade.getColor().b, fadeAlpha);
+            stage.getBatch().begin();
+            blackFade.draw(stage.getBatch());
+            //blackFade.draw(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+            stage.getBatch().end();
+        }
         stage.draw();
     }
 
