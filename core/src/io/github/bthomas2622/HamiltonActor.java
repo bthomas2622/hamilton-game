@@ -18,7 +18,7 @@ public class HamiltonActor extends Actor {
     boolean nextScreen = false;
     TextureRegion hamiltonTextureRegion;
 
-    public HamiltonActor(final HamiltonGame gam, boolean seated, boolean finished){
+    public HamiltonActor(final HamiltonGame gam){
         game = gam;
         this.seated = seated;
         this.finished = finished;
@@ -98,5 +98,8 @@ public class HamiltonActor extends Actor {
 
     public boolean getNextScreen(){
         return nextScreen;
+    }
+
+    public void dispose(){
     }
 }

@@ -36,64 +36,23 @@ import javafx.scene.shape.MoveTo;
 public class ScreenOne implements Screen, InputProcessor {
     final HamiltonGame game;
     private Stage stage;
-    //font variables
-    FreeTypeFontGenerator generator;
-    FreeTypeFontGenerator.FreeTypeFontParameter parameter;
-    BitmapFont gameFont;
-    GlyphLayout glyphLayout;
     String hurricanePoem = "This is a test. This is a test.";
-    float paragraphWidth;
-    Boolean finished = false;
-    Boolean seated = false;
-    Boolean nextScreen = false;
     float fadeAlpha = 0.0f;
     Sprite blackFade;
     HamiltonActor hamilton;
+    HamiltonWritings hurricaneWritings;
 
 
     public ScreenOne(final HamiltonGame gam){
         game = gam;
         stage = new Stage(new FitViewport(1920, 1080));
         Gdx.input.setInputProcessor(stage);
-        hamilton = new HamiltonActor(game, seated, finished);
-        HamiltonWritings hurricaneWritings = new HamiltonWritings();
+        hamilton = new HamiltonActor(game);
+        hurricaneWritings = new HamiltonWritings(hurricanePoem);
         stage.addActor(hamilton);
         stage.addActor(hurricaneWritings);
         blackFade = new Sprite(game.blackBackdrop);
         Gdx.input.setInputProcessor(this);
-    }
-
-    public class HamiltonWritings extends Actor {
-
-        public HamiltonWritings(){
-            System.out.println("test");
-            generator = new FreeTypeFontGenerator(Gdx.files.internal("JustAnotherHand.ttf"));
-            parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
-            parameter.size = 20;
-            parameter.color = Color.BLACK;
-            gameFont = generator.generateFont(parameter);
-            //generating a glyph layout to get the length of the string so i can center it
-            glyphLayout = new GlyphLayout();;
-            glyphLayout.setText(gameFont,hurricanePoem);
-            paragraphWidth = glyphLayout.width;
-
-        }
-        @Override
-        public void act(float delta){
-            super.act(delta);
-//            if(Gdx.input.isKeyPressed(int key){
-//
-//                if(this.getX() < Gdx.graphics.getWidth() / 2){
-//                    this.setPosition(getX() + 5, getY());
-//                }
-//            }
-        }
-
-        @Override
-        public void draw(Batch batch, float alpha) {
-            gameFont.draw(batch, hurricanePoem, Gdx.graphics.getWidth()/2 - paragraphWidth/2, Gdx.graphics.getHeight() - Gdx.graphics.getHeight()/6);
-        }
-
     }
 
 //    public void create() {
@@ -141,13 +100,13 @@ public class ScreenOne implements Screen, InputProcessor {
     @Override
     public boolean keyTyped(char character) {
         if (hamilton.getSeated() == true){
-            if (hurricanePoem.equals("")){
+            if (hurricaneWritings.getHurricanePoem().equals("")){
                 hamilton.setFinished(true);
                 hamilton.setSeated(false);
                 System.out.println("finished");
             } else {
-                if (hurricanePoem.charAt(0) == character) {
-                    hurricanePoem = hurricanePoem.substring(1);
+                if (hurricaneWritings.getHurricanePoem().charAt(0) == character) {
+                    hurricaneWritings.setHurricanePoem(hurricaneWritings.getHurricanePoem().substring(1));
                 }
             }
         }
@@ -213,6 +172,6 @@ public class ScreenOne implements Screen, InputProcessor {
     @Override
     public void dispose(){
         stage.dispose();
-        generator.dispose();
+        hurricaneWritings.dispose();
     }
 }
