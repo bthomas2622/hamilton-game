@@ -1,9 +1,5 @@
 package io.github.bthomas2622;
 
-/**
- * Created by bthom on 1/8/2017.
- */
-
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
@@ -12,25 +8,28 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 
+/**
+ * Created by bthom on 2/10/2017.
+ */
 
-public class ScreenOne implements Screen, InputProcessor {
+public class ScreenTwo implements Screen, InputProcessor {
     final HamiltonGame game;
     private Stage stage;
-    String hurricanePoem = "This is a test. This is a test.";
+    String tbdPoem = "This is the second test. This is the second test.";
     float fadeAlpha = 0.0f;
     Sprite blackFade;
     HamiltonActor hamilton;
-    HamiltonWritings hurricaneWritings;
+    HamiltonWritings tbdWritings;
 
 
-    public ScreenOne(final HamiltonGame gam){
+    public ScreenTwo(final HamiltonGame gam){
         game = gam;
         stage = new Stage(new FitViewport(1920, 1080));
         Gdx.input.setInputProcessor(stage);
         hamilton = new HamiltonActor(game);
-        hurricaneWritings = new HamiltonWritings(hurricanePoem);
+        tbdWritings = new HamiltonWritings(tbdPoem);
         stage.addActor(hamilton);
-        stage.addActor(hurricaneWritings);
+        stage.addActor(tbdWritings);
         blackFade = new Sprite(game.blackBackdrop);
         Gdx.input.setInputProcessor(this);
     }
@@ -51,9 +50,6 @@ public class ScreenOne implements Screen, InputProcessor {
             blackFade.draw(stage.getBatch());
             //blackFade.draw(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
             stage.getBatch().end();
-            if (fadeAlpha >= 1f){
-                game.setScreen(new ScreenTwoIntro(game));
-            }
         }
         stage.draw();
     }
@@ -75,13 +71,13 @@ public class ScreenOne implements Screen, InputProcessor {
     @Override
     public boolean keyTyped(char character) {
         if (hamilton.getSeated() == true){
-            if (hurricaneWritings.getHurricanePoem().equals("")){
+            if (tbdWritings.getHurricanePoem().equals("")){
                 hamilton.setFinished(true);
                 hamilton.setSeated(false);
                 System.out.println("finished");
             } else {
-                if (hurricaneWritings.getHurricanePoem().charAt(0) == character) {
-                    hurricaneWritings.setHurricanePoem(hurricaneWritings.getHurricanePoem().substring(1));
+                if (tbdWritings.getHurricanePoem().charAt(0) == character) {
+                    tbdWritings.setHurricanePoem(tbdWritings.getHurricanePoem().substring(1));
                 }
             }
         }
@@ -148,6 +144,6 @@ public class ScreenOne implements Screen, InputProcessor {
     @Override
     public void dispose(){
         stage.dispose();
-        hurricaneWritings.dispose();
+        tbdWritings.dispose();
     }
 }

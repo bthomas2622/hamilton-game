@@ -1,40 +1,26 @@
 package io.github.bthomas2622;
 
-/**
- * Created by bthom on 1/19/2017.
- */
-
-/**
- * Created by bthom on 1/8/2017.
- */
-
-
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.g2d.Batch;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.graphics.g2d.GlyphLayout;
-import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
-import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.utils.TimeUtils;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 
+/**
+ * Created by bthom on 2/10/2017.
+ */
 
-public class ScreenOneIntro implements Screen {
+public class ScreenTwoIntro implements Screen {
     final HamiltonGame game;
     private Stage stage;
-    String hurricaneIntro = "Alexander Hamilton was born January 11th, 1757 on the island of Nevis in the British West Indies. \nThis is a new line                              ";
-    IntroWritings hurricaneWritings;
+    String tbdIntro = "The second journey begins. \nThis is a new line                              ";
+    IntroWritings tbdWritings;
 
-    public ScreenOneIntro(final HamiltonGame gam){
+    public ScreenTwoIntro(final HamiltonGame gam){
         game = gam;
         stage = new Stage(new FitViewport(1920, 1080));
-        hurricaneWritings = new IntroWritings(hurricaneIntro);
-        stage.addActor(hurricaneWritings);
+        tbdWritings = new IntroWritings(tbdIntro);
+        stage.addActor(tbdWritings);
     }
 
     @Override
@@ -47,8 +33,8 @@ public class ScreenOneIntro implements Screen {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         stage.act(delta);
         stage.draw();
-        if (hurricaneWritings.getIntroFinished()){
-            game.setScreen(new ScreenOne(game));
+        if (tbdWritings.getIntroFinished()){
+            game.setScreen(new ScreenTwo(game));
         }
     }
 
@@ -92,6 +78,6 @@ public class ScreenOneIntro implements Screen {
     @Override
     public void dispose(){
         stage.dispose();
-        hurricaneWritings.dispose();
+        tbdWritings.dispose();
     }
 }
