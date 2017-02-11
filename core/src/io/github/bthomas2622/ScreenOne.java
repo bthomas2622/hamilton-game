@@ -48,78 +48,19 @@ public class ScreenOne implements Screen, InputProcessor {
     Boolean nextScreen = false;
     float fadeAlpha = 0.0f;
     Sprite blackFade;
+    HamiltonActor hamilton;
 
 
     public ScreenOne(final HamiltonGame gam){
+        game = gam;
         stage = new Stage(new FitViewport(1920, 1080));
         Gdx.input.setInputProcessor(stage);
-        HamiltonActor hamilton = new HamiltonActor();
+        hamilton = new HamiltonActor(game, seated, finished);
         HamiltonWritings hurricaneWritings = new HamiltonWritings();
         stage.addActor(hamilton);
         stage.addActor(hurricaneWritings);
-        game = gam;
         blackFade = new Sprite(game.blackBackdrop);
         Gdx.input.setInputProcessor(this);
-    }
-
-
-    public class HamiltonActor extends Actor {
-        TextureRegion hamiltonTextureRegion = new TextureRegion(game.hamiltonTexture);
-        float actorX = 0, actorY = 0;
-
-        public HamiltonActor(){
-            setBounds(actorX, actorY, game.hamiltonTexture.getWidth(), game.hamiltonTexture.getHeight());
-        }
-
-        @Override
-        public void act(float delta){
-            super.act(delta);
-            if (seated){
-            } else {
-                if (finished){
-                    if(Gdx.input.isKeyPressed(Input.Keys.RIGHT)){
-                        if(this.getX() >= Gdx.graphics.getWidth() / 2  - this.getWidth() / 2 && this.getX() < Gdx.graphics.getWidth()  + this.getWidth()){
-                            if (this.getX() <= Gdx.graphics.getWidth() + this.getWidth() - 5){
-                                this.setPosition(getX() + 5, getY());
-                            }
-                            else {
-                                nextScreen = true;
-                            }
-                        }
-                    }
-                    if(Gdx.input.isKeyPressed(Input.Keys.LEFT)){
-                        if(this.getX() >= Gdx.graphics.getWidth() / 2  - this.getWidth() / 2 && this.getX() < Gdx.graphics.getWidth() + this.getWidth() - 5){
-                            if (this.getX() >= Gdx.graphics.getWidth() / 2  - this.getWidth() / 2 + 5){
-                                this.setPosition(getX() - 5, getY());
-                            }
-                        }
-                    }
-                } else {
-                    if(Gdx.input.isKeyPressed(Input.Keys.RIGHT)){
-                        if(this.getX() >= 0 && this.getX() < Gdx.graphics.getWidth() / 2 - this.getWidth() / 2) {
-                            this.setPosition(getX() + 5, getY());
-                            if (this.getX() >= Gdx.graphics.getWidth() / 2 - this.getWidth() / 2) {
-                                seated = true;
-                            }
-                        }
-                    }
-                    if(Gdx.input.isKeyPressed(Input.Keys.LEFT)){
-                        if(this.getX() >= 0 && this.getX() < Gdx.graphics.getWidth() / 2 - this.getWidth() / 2){
-                            if (this.getX() >= 5){
-                                this.setPosition(getX() - 5, getY());
-                            }
-                        }
-                    }
-                }
-            }
-        }
-
-        @Override
-        public void draw(Batch batch, float alpha) {
-//            Color color = getColor();
-//            batch.setColor(color.r, color.g, color.b, color.a * alpha);
-            batch.draw(hamiltonTextureRegion, getX(), getY(), getOriginX(), getOriginY(), getWidth(), getHeight(), getScaleX(), getScaleY(), getRotation());
-        }
     }
 
     public class HamiltonWritings extends Actor {
@@ -172,7 +113,7 @@ public class ScreenOne implements Screen, InputProcessor {
         Gdx.gl.glClearColor(1, 1, 1, 0);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         stage.act(delta);
-        if (nextScreen & fadeAlpha < 1f){
+        if (hamilton.getNextScreen() & fadeAlpha < 1f){
             fadeAlpha += .01f;
             blackFade.setColor(blackFade.getColor().r, blackFade.getColor().g, blackFade.getColor().b, fadeAlpha);
             stage.getBatch().begin();
@@ -199,10 +140,10 @@ public class ScreenOne implements Screen, InputProcessor {
 
     @Override
     public boolean keyTyped(char character) {
-        if (seated == true){
+        if (hamilton.getSeated() == true){
             if (hurricanePoem.equals("")){
-                finished = true;
-                seated = false;
+                hamilton.setFinished(true);
+                hamilton.setSeated(false);
                 System.out.println("finished");
             } else {
                 if (hurricanePoem.charAt(0) == character) {
