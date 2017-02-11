@@ -17,7 +17,6 @@ public class ScreenTwo implements Screen, InputProcessor {
     private Stage stage;
     String tbdPoem = "This is the second test. This is the second test.";
     float fadeAlpha = 0.0f;
-    Sprite blackFade;
     HamiltonActor hamilton;
     HamiltonWritings tbdWritings;
 
@@ -30,7 +29,6 @@ public class ScreenTwo implements Screen, InputProcessor {
         tbdWritings = new HamiltonWritings(tbdPoem);
         stage.addActor(hamilton);
         stage.addActor(tbdWritings);
-        blackFade = new Sprite(game.blackBackdrop);
         Gdx.input.setInputProcessor(this);
     }
 
@@ -40,16 +38,14 @@ public class ScreenTwo implements Screen, InputProcessor {
 //        if (loaded == false){
 //            loaded = startMusic();
 //        }
-        Gdx.gl.glClearColor(1, 1, 1, 0);
+        Gdx.gl.glClearColor(1f - fadeAlpha, 1f - fadeAlpha, 1f - fadeAlpha, 0);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         stage.act(delta);
         if (hamilton.getNextScreen() & fadeAlpha < 1f){
             fadeAlpha += .01f;
-            blackFade.setColor(blackFade.getColor().r, blackFade.getColor().g, blackFade.getColor().b, fadeAlpha);
-            stage.getBatch().begin();
-            blackFade.draw(stage.getBatch());
-            //blackFade.draw(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-            stage.getBatch().end();
+            if (fadeAlpha >= 1f){
+                //game.setScreen(new ScreenTwoIntro(game));
+            }
         }
         stage.draw();
     }

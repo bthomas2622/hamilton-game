@@ -9,13 +9,11 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public class HamiltonGame extends Game {
 	public static Texture hamiltonTexture;
-    public static Texture blackBackdrop;
 	
 	@Override
 	public void create () {
 		//batch = new SpriteBatch();
         this.hamiltonTexture = new Texture(Gdx.files.internal("hamilton.png"));
-        this.blackBackdrop = new Texture(Gdx.files.internal("blackBackdrop.png"));
 		this.setScreen(new ScreenOneIntro(this));
 	}
 
