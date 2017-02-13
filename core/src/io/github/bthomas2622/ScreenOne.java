@@ -17,6 +17,7 @@ public class ScreenOne implements Screen, InputProcessor {
     final HamiltonGame game;
     private Stage stage;
     String hurricanePoem = "This is a test. This is a test.";
+    String restOfWritings = " Part 2";
     float fadeAlpha = 0.0f;
     HamiltonActor hamilton;
     HamiltonWritings hurricaneWritings;
@@ -27,7 +28,7 @@ public class ScreenOne implements Screen, InputProcessor {
         stage = new Stage(new FitViewport(1920, 1080));
         Gdx.input.setInputProcessor(stage);
         hamilton = new HamiltonActor(game);
-        hurricaneWritings = new HamiltonWritings(hurricanePoem);
+        hurricaneWritings = new HamiltonWritings(hurricanePoem, restOfWritings);
         stage.addActor(hamilton);
         stage.addActor(hurricaneWritings);
         Gdx.input.setInputProcessor(this);
@@ -68,13 +69,17 @@ public class ScreenOne implements Screen, InputProcessor {
     @Override
     public boolean keyTyped(char character) {
         if (hamilton.getSeated() == true){
-            if (hurricaneWritings.getHurricanePoem().equals("")){
+            if (hurricaneWritings.getVisibleWriting().equals("")){
                 hamilton.setFinished(true);
                 hamilton.setSeated(false);
                 System.out.println("finished");
             } else {
-                if (hurricaneWritings.getHurricanePoem().charAt(0) == character) {
-                    hurricaneWritings.setHurricanePoem(hurricaneWritings.getHurricanePoem().substring(1));
+                if (hurricaneWritings.getVisibleWriting().charAt(0) == character) {
+                    hurricaneWritings.setVisibleWriting(hurricaneWritings.getVisibleWriting().substring(1));
+                    if (hurricaneWritings.getRestOfWriting().equals("") == false){
+                        hurricaneWritings.setVisibleWriting(hurricaneWritings.getVisibleWriting().concat(String.valueOf(hurricaneWritings.getRestOfWriting().charAt(0))));
+                        hurricaneWritings.setRestOfWriting(hurricaneWritings.getRestOfWriting().substring(1));
+                    }
                 }
             }
         }

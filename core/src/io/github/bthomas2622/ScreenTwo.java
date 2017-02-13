@@ -16,6 +16,7 @@ public class ScreenTwo implements Screen, InputProcessor {
     final HamiltonGame game;
     private Stage stage;
     String tbdPoem = "This is the second test. This is the second test.";
+    String restof = "";
     float fadeAlpha = 0.0f;
     HamiltonActor hamilton;
     HamiltonWritings tbdWritings;
@@ -26,7 +27,7 @@ public class ScreenTwo implements Screen, InputProcessor {
         stage = new Stage(new FitViewport(1920, 1080));
         Gdx.input.setInputProcessor(stage);
         hamilton = new HamiltonActor(game);
-        tbdWritings = new HamiltonWritings(tbdPoem);
+        tbdWritings = new HamiltonWritings(tbdPoem, restof);
         stage.addActor(hamilton);
         stage.addActor(tbdWritings);
         Gdx.input.setInputProcessor(this);
@@ -67,13 +68,13 @@ public class ScreenTwo implements Screen, InputProcessor {
     @Override
     public boolean keyTyped(char character) {
         if (hamilton.getSeated() == true){
-            if (tbdWritings.getHurricanePoem().equals("")){
+            if (tbdWritings.getVisibleWriting().equals("")){
                 hamilton.setFinished(true);
                 hamilton.setSeated(false);
                 System.out.println("finished");
             } else {
-                if (tbdWritings.getHurricanePoem().charAt(0) == character) {
-                    tbdWritings.setHurricanePoem(tbdWritings.getHurricanePoem().substring(1));
+                if (tbdWritings.getVisibleWriting().charAt(0) == character) {
+                    tbdWritings.setVisibleWriting(tbdWritings.getVisibleWriting().substring(1));
                 }
             }
         }

@@ -17,13 +17,15 @@ public class HamiltonWritings extends Actor {
     FreeTypeFontGenerator generator;
     FreeTypeFontGenerator.FreeTypeFontParameter parameter;
     GlyphLayout glyphLayout;
-    String hurricanePoem;
+    String visibleWriting;
+    String restOfWriting;
     BitmapFont gameFont;
     float paragraphWidth;
 
-    public HamiltonWritings(String hurricanePoem){
+    public HamiltonWritings(String visibleWriting, String restOfWriting){
         System.out.println("test");
-        this.hurricanePoem = hurricanePoem;
+        this.visibleWriting = visibleWriting;
+        this.restOfWriting = restOfWriting;
         this.gameFont = gameFont;
         generator = new FreeTypeFontGenerator(Gdx.files.internal("JustAnotherHand.ttf"));
         parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
@@ -32,7 +34,7 @@ public class HamiltonWritings extends Actor {
         gameFont = generator.generateFont(parameter);
         //generating a glyph layout to get the length of the string so i can center it
         glyphLayout = new GlyphLayout();;
-        glyphLayout.setText(gameFont,hurricanePoem);
+        glyphLayout.setText(gameFont,visibleWriting);
         paragraphWidth = glyphLayout.width;
 
     }
@@ -49,15 +51,23 @@ public class HamiltonWritings extends Actor {
 
     @Override
     public void draw(Batch batch, float alpha) {
-        gameFont.draw(batch, hurricanePoem, Gdx.graphics.getWidth()/2 - paragraphWidth/2, Gdx.graphics.getHeight() - Gdx.graphics.getHeight()/6);
+        gameFont.draw(batch, visibleWriting, Gdx.graphics.getWidth()/2 - paragraphWidth/2, Gdx.graphics.getHeight() - Gdx.graphics.getHeight()/6);
     }
 
-    public void setHurricanePoem(String hurricanePoem){
-        this.hurricanePoem = hurricanePoem;
+    public void setVisibleWriting(String visibleWriting){
+        this.visibleWriting = visibleWriting;
     }
 
-    public String getHurricanePoem(){
-        return hurricanePoem;
+    public String getVisibleWriting(){
+        return visibleWriting;
+    }
+
+    public void setRestOfWriting(String restOfWriting){
+        this.restOfWriting = restOfWriting;
+    }
+
+    public String getRestOfWriting(){
+        return restOfWriting;
     }
 
     public void dispose(){
