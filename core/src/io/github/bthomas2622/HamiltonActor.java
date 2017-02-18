@@ -20,8 +20,6 @@ public class HamiltonActor extends Actor {
 
     public HamiltonActor(final HamiltonGame gam){
         game = gam;
-        this.seated = seated;
-        this.finished = finished;
         setBounds(actorX, actorY, game.hamiltonTexture.getWidth(), game.hamiltonTexture.getHeight());
         hamiltonTextureRegion = new TextureRegion(game.hamiltonTexture);
     }

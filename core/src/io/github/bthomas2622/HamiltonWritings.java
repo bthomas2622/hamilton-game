@@ -23,14 +23,15 @@ public class HamiltonWritings extends Actor {
     int currentParagraph = 0;
     int numberOfParagraphs;
     float paragraphWidth;
+    float textFieldWidth = 500f;
 
     public HamiltonWritings(Array<String> totalWork){
         System.out.println("test");
         this.totalWork = totalWork;
         numberOfParagraphs = totalWork.size - 1;
-        generator = new FreeTypeFontGenerator(Gdx.files.internal("JustAnotherHand.ttf"));
+        generator = new FreeTypeFontGenerator(Gdx.files.internal("GentiumBookBasicBoldItalic.ttf"));
         parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
-        parameter.size = 20;
+        parameter.size = 18;
         parameter.color = Color.BLACK;
         gameFont = generator.generateFont(parameter);
         //generating a glyph layout to get the length of the string so i can center it
@@ -52,7 +53,7 @@ public class HamiltonWritings extends Actor {
 
     @Override
     public void draw(Batch batch, float alpha) {
-        gameFont.draw(batch, totalWork.get(currentParagraph), Gdx.graphics.getWidth()/2 - paragraphWidth/2, Gdx.graphics.getHeight() - Gdx.graphics.getHeight()/6);
+        gameFont.draw(batch, totalWork.get(currentParagraph), Gdx.graphics.getWidth()/2 - textFieldWidth/2, Gdx.graphics.getHeight() - Gdx.graphics.getHeight()/6, textFieldWidth, 8, true);
     }
 
     public void checkTyped(char character){
