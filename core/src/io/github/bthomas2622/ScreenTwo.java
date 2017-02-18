@@ -6,6 +6,7 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 
 /**
@@ -15,8 +16,10 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 public class ScreenTwo implements Screen, InputProcessor {
     final HamiltonGame game;
     private Stage stage;
-    String tbdPoem = "This is the second test. This is the second test.";
-    String restof = "";
+    String paragraph0 = "This is a test. This is a test.";
+    String paragraph1 = "Paragraph2";
+    String paragraph2 = "Paragraph3";
+    Array<String> restOfWritings = new Array<String>(true, 3);
     float fadeAlpha = 0.0f;
     HamiltonActor hamilton;
     HamiltonWritings tbdWritings;
@@ -27,7 +30,10 @@ public class ScreenTwo implements Screen, InputProcessor {
         stage = new Stage(new FitViewport(1920, 1080));
         Gdx.input.setInputProcessor(stage);
         hamilton = new HamiltonActor(game);
-        tbdWritings = new HamiltonWritings(tbdPoem, restof);
+        restOfWritings.add(paragraph0);
+        restOfWritings.add(paragraph1);
+        restOfWritings.add(paragraph2);
+        tbdWritings = new HamiltonWritings(restOfWritings);
         stage.addActor(hamilton);
         stage.addActor(tbdWritings);
         Gdx.input.setInputProcessor(this);
@@ -69,13 +75,13 @@ public class ScreenTwo implements Screen, InputProcessor {
     public boolean keyTyped(char character) {
         if (hamilton.getSeated() == true){
             if (tbdWritings.getVisibleWriting().equals("")){
-                hamilton.setFinished(true);
-                hamilton.setSeated(false);
-                System.out.println("finished");
-            } else {
-                if (tbdWritings.getVisibleWriting().charAt(0) == character) {
-                    tbdWritings.setVisibleWriting(tbdWritings.getVisibleWriting().substring(1));
+                if (tbdWritings.nextParagraph()){
+                    hamilton.setFinished(true);
+                    hamilton.setSeated(false);
+                    System.out.println("finished");
                 }
+            } else {
+                tbdWritings.checkTyped(character);
             }
         }
         return false;

@@ -10,14 +10,17 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 
 
 public class ScreenOne implements Screen, InputProcessor {
     final HamiltonGame game;
     private Stage stage;
-    String hurricanePoem = "This is a test. This is a test.";
-    String restOfWritings = " Part 2";
+    String paragraph0 = "Para graph 1";
+    String paragraph1 = "Paragraph2";
+    String paragraph2 = "Paragraph3";
+    Array<String> writings = new Array<String>(true, 3);
     float fadeAlpha = 0.0f;
     HamiltonActor hamilton;
     HamiltonWritings hurricaneWritings;
@@ -28,7 +31,10 @@ public class ScreenOne implements Screen, InputProcessor {
         stage = new Stage(new FitViewport(1920, 1080));
         Gdx.input.setInputProcessor(stage);
         hamilton = new HamiltonActor(game);
-        hurricaneWritings = new HamiltonWritings(hurricanePoem, restOfWritings);
+        writings.add(paragraph0);
+        writings.add(paragraph1);
+        writings.add(paragraph2);
+        hurricaneWritings = new HamiltonWritings(writings);
         stage.addActor(hamilton);
         stage.addActor(hurricaneWritings);
         Gdx.input.setInputProcessor(this);
@@ -70,17 +76,13 @@ public class ScreenOne implements Screen, InputProcessor {
     public boolean keyTyped(char character) {
         if (hamilton.getSeated() == true){
             if (hurricaneWritings.getVisibleWriting().equals("")){
-                hamilton.setFinished(true);
-                hamilton.setSeated(false);
-                System.out.println("finished");
-            } else {
-                if (hurricaneWritings.getVisibleWriting().charAt(0) == character) {
-                    hurricaneWritings.setVisibleWriting(hurricaneWritings.getVisibleWriting().substring(1));
-                    if (hurricaneWritings.getRestOfWriting().equals("") == false){
-                        hurricaneWritings.setVisibleWriting(hurricaneWritings.getVisibleWriting().concat(String.valueOf(hurricaneWritings.getRestOfWriting().charAt(0))));
-                        hurricaneWritings.setRestOfWriting(hurricaneWritings.getRestOfWriting().substring(1));
-                    }
+                if (hurricaneWritings.nextParagraph()){
+                    hamilton.setFinished(true);
+                    hamilton.setSeated(false);
+                    System.out.println("finished");
                 }
+            } else {
+                hurricaneWritings.checkTyped(character);
             }
         }
         return false;
