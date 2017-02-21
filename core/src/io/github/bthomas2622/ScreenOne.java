@@ -18,12 +18,13 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 public class ScreenOne implements Screen, InputProcessor {
     final HamiltonGame game;
     private Stage stage;
+    String writingInfo = "\"Account of a Hurricane\", September 6, 1772";
     String firstSentence = "Honoured Sir, I take up my pen just to give you an imperfect account of the most dreadful hurricane that memory or any records whatever can trace, which happened here on the 31st ultimo at night.";
-    String paragraph1a = "Where now, Oh! vile worm, is all thy boasted fortitude and resolution? what is become of thy arrogance and self sufficiency? why dost thou tremble and stand aghast? how humble how helpless how contemptible you now appear. And for why? the jarring of the elements the discord of clouds? Oh, impotent presumptuous fool! how darest thou offend that omnipotence, whose nod alone were sufficient to quell the destruction that hovers over thee, or crush thee into atoms?";
-    String paragraph1b = "See thy wretched helpless state and learn to know thyself. Learn to know thy best support. Despise thyself and adore thy God. How sweet how unutterably sweet were now the voice of an approving conscience; then couldst thou say hence ye idle alarms why do I shrink? What have I to fear? A pleasing calm suspense! a short repose from calamity to end in eternal bliss? let the earth rend, let the planets forsake their course let the sun be extinguished, and the heavens burst asunder yet what have I to dread? my staff can never be broken in omnipotence I trust...";
-    String closingParagraphA = "Yet hold, Oh, vain mortal! check thy ill timed joy. Art thou so selfish as to exult because thy lot is happy in a season of universal woe? Hast thou no feelings for the miseries of thy fellow-creatures, and art thou incapable of the soft pangs of sympathetic sorrow? Look around thee and shudder at the view. See desolation and ruin wherever thou turnest thine eye. See thy fellow creatures pale and lifeless; their bodies mangled their souls snatched into eternity unexpecting alas! perhaps unprepared! Hark the bitter groans of distress see sickness and infirmities exposed to the inclemencies of wind and water see tender infancy pinched with hunger and hanging to the mother's knee for food! see the unhappy mother's anxiety her poverty denies relief";
-    String closingParagraphB = "her breast heaves with pangs of maternal pity her heart is bursting the tears gush down her cheeks Oh sights of woe! Oh distress unspeakable! my heart bleeds but I have no power to solace! Oh ye, who revel in affluence, see the afflictions of humanity, and bestow your superfluity to ease them. Say not, we have suffered also, and withhold your compassion. What are your sufferings compared to these? Ye have still more than enough left. Act wisely. Succour the miserable and lay up a treasure in Heaven.";
-    Array<String> writings = new Array<String>(true, 5);
+    String paragraph1a = "Where now, Oh! vile worm, is all thy boasted fortitude and resolution? what is become of thy arrogance and self sufficiency? Why dost thou tremble and stand aghast? How humble, how helpless, how contemptible you now appear. And for why? The jarring of the elements? The discord of clouds? Oh, impotent presumptuous fool! How darest thou offend that omnipotence, whose nod alone were sufficient to quell the destruction that hovers over thee, or crush thee into atoms?";
+    String paragraph1b = "See thy wretched helpless state and learn to know thyself. Learn to know thy best support. Despise thyself and adore thy God. How sweet how unutterably sweet were now the voice of an approving conscience; Then couldst thou say hence ye idle alarms, why do I shrink? What have I to fear? A pleasing calm suspense! A short repose from calamity to end in eternal bliss? Let the earth rend. Let the planets forsake their course. Let the sun be extinguished and the heavens burst asunder. Yet what have I to dread? My staff can never be broken, in omnipotence I trust...";
+    String closingParagraphA = "Yet hold, Oh, vain mortal! Check thy ill timed joy. Art thou so selfish as to exult because thy lot is happy in a season of universal woe? Hast thou no feelings for the miseries of thy fellow creatures? And art thou incapable of the soft pangs of sympathetic sorrow? Look around thee and shudder at the view. See desolation and ruin wherever thou turnest thine eye! See thy fellow creatures pale and lifeless; their bodies mangled, their souls snatched into eternity, unexpecting. Alas! perhaps unprepared! Hark the bitter groans of distress. See sickness and infirmities exposed to the inclemencies of wind and water! See tender infancy pinched with hunger and hanging on the mother's knee for food! See the unhappy mother's anxiety. Her poverty denies relief";
+    String closingParagraphB = "her breast heaves with pangs of maternal pity, her heart is bursting, the tears gush down her cheeks. Oh sights of woe! Oh distress unspeakable! My heart bleeds, but I have no power to solace! Oh ye, who revel in affluence, see the afflictions of humanity and bestow your superfluity to ease them. Say not, we have suffered also, and thence withhold your compassion. What are your sufferings compared to those? Ye have still more than enough left. Act wisely. Succour the miserable and lay up a treasure in Heaven.";
+    Array<String> writings = new Array<String>(true, 6);
     float fadeAlpha = 0.0f;
     HamiltonActor hamilton;
     HamiltonWritings hurricaneWritings;
@@ -34,6 +35,7 @@ public class ScreenOne implements Screen, InputProcessor {
         stage = new Stage(new FitViewport(1920, 1080));
         Gdx.input.setInputProcessor(stage);
         hamilton = new HamiltonActor(game);
+        writings.add(writingInfo);
         writings.add(firstSentence);
         writings.add(paragraph1a);
         writings.add(paragraph1b);
@@ -54,11 +56,15 @@ public class ScreenOne implements Screen, InputProcessor {
         Gdx.gl.glClearColor(1f - fadeAlpha,1f - fadeAlpha,1f - fadeAlpha, 0);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         stage.act(delta);
-        if (hamilton.getNextScreen() & fadeAlpha < 1f){
+        if (hamilton.getNextScreen() && fadeAlpha < 1f){
             fadeAlpha += .01f;
             if (fadeAlpha >= 1f){
                 game.setScreen(new ScreenTwoIntro(game));
             }
+        }
+        //Start the writing when hamilton sits down
+        if (hamilton.getSeated() && hurricaneWritings.getCurrentParagraph() == 0){
+            hurricaneWritings.nextParagraph();
         }
         if (hamilton.getSeated()){
             if (Gdx.input.isKeyJustPressed(Input.Keys.DOWN)){

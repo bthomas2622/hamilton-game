@@ -28,6 +28,7 @@ public class IntroWritings extends Actor {
     int introLetter = 0;
     float alpha = 1f;
     boolean introFinished = false;
+    float textFieldWidth = 1000f;
 
     public IntroWritings(String intro){
         this.intro = intro;
@@ -72,7 +73,7 @@ public class IntroWritings extends Actor {
 
     @Override
     public void draw(Batch batch, float alpha) {
-        gameFont.draw(batch, introStaggered, Gdx.graphics.getWidth()/6, Gdx.graphics.getHeight() - Gdx.graphics.getHeight()/6);
+        gameFont.draw(batch, introStaggered, Gdx.graphics.getWidth()/6, Gdx.graphics.getHeight() - Gdx.graphics.getHeight()/6, textFieldWidth, 8, true);
     }
 
     public boolean getIntroFinished(){

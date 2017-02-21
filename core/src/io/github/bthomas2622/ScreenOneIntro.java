@@ -27,7 +27,7 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 public class ScreenOneIntro implements Screen {
     final HamiltonGame game;
     private Stage stage;
-    String hurricaneIntro = "Alexander Hamilton was born January 11th, 1757 on the island of Nevis in the British West Indies. \nThis is a new line                              ";
+    String hurricaneIntro = "Alexander Hamilton was born January 11th, 1757 on the island of Nevis in the British West Indies. Alexander was abandoned by his father. His mother succumbed to a severe fever and died shortly after Alexander’s 11th birthday. Alexander buried himself in books and obtained a job working as a clerk at a local import-export firm in St. Croix. On August 30, 1772 a devastating hurricane laid waste to the island. Hamilton wrote his father a detailed account of the hurricane that was later published to the Royal Danish-American Gazette. The essay was so well received amongst the community that a fund was collected to send young Hamilton to the North American colonies to receive an education.";
     IntroWritings hurricaneWritings;
 
     public ScreenOneIntro(final HamiltonGame gam){

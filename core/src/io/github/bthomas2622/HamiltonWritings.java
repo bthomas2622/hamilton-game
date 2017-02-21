@@ -57,7 +57,7 @@ public class HamiltonWritings extends Actor {
     }
 
     public void checkTyped(char character){
-        if (totalWork.get(currentParagraph).charAt(0) == character) {
+        if (String.valueOf(totalWork.get(currentParagraph).charAt(0)).toLowerCase().equals(String.valueOf(character).toLowerCase())) {
             totalWork.set(currentParagraph, totalWork.get(currentParagraph).substring(1));
         }
     }
@@ -81,6 +81,10 @@ public class HamiltonWritings extends Actor {
 
     public Array<String> getTotalWork(){
         return totalWork;
+    }
+
+    public int getCurrentParagraph(){
+        return currentParagraph;
     }
 
     public void dispose(){
