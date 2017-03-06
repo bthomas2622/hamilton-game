@@ -17,9 +17,13 @@ public class HamiltonActor extends Actor {
     boolean finished = false;
     boolean nextScreen = false;
     TextureRegion hamiltonTextureRegion;
+    float screenWidth;
+    float screenHeight;
 
     public HamiltonActor(final HamiltonGame gam){
         game = gam;
+        screenHeight = game.aspectY;
+        screenWidth = game.aspectX;
         setBounds(actorX, actorY, game.hamiltonTexture.getWidth(), game.hamiltonTexture.getHeight());
         hamiltonTextureRegion = new TextureRegion(game.hamiltonTexture);
     }
@@ -31,8 +35,8 @@ public class HamiltonActor extends Actor {
         } else {
             if (finished){
                 if(Gdx.input.isKeyPressed(Input.Keys.RIGHT)){
-                    if(this.getX() >= Gdx.graphics.getWidth() / 2  - this.getWidth() / 2 && this.getX() < Gdx.graphics.getWidth()  + this.getWidth()){
-                        if (this.getX() <= Gdx.graphics.getWidth() + this.getWidth() - 5){
+                    if(this.getX() >= screenWidth / 2  - this.getWidth() / 2 && this.getX() < screenWidth  + this.getWidth()){
+                        if (this.getX() <= screenWidth + this.getWidth() - 5){
                             this.setPosition(getX() + 5, getY());
                         }
                         else {
@@ -41,23 +45,23 @@ public class HamiltonActor extends Actor {
                     }
                 }
                 if(Gdx.input.isKeyPressed(Input.Keys.LEFT)){
-                    if(this.getX() >= Gdx.graphics.getWidth() / 2  - this.getWidth() / 2 && this.getX() < Gdx.graphics.getWidth() + this.getWidth() - 5){
-                        if (this.getX() >= Gdx.graphics.getWidth() / 2  - this.getWidth() / 2 + 5){
+                    if(this.getX() >= screenWidth / 2  - this.getWidth() / 2 && this.getX() < screenWidth + this.getWidth() - 5){
+                        if (this.getX() >= screenWidth / 2  - this.getWidth() / 2 + 5){
                             this.setPosition(getX() - 5, getY());
                         }
                     }
                 }
             } else {
                 if(Gdx.input.isKeyPressed(Input.Keys.RIGHT)){
-                    if(this.getX() >= 0 && this.getX() < Gdx.graphics.getWidth() / 2 - this.getWidth() / 2) {
+                    if(this.getX() >= 0 && this.getX() < screenWidth / 2 - this.getWidth() / 2) {
                         this.setPosition(getX() + 5, getY());
-                        if (this.getX() >= Gdx.graphics.getWidth() / 2 - this.getWidth() / 2) {
+                        if (this.getX() >= screenWidth / 2 - this.getWidth() / 2) {
                             seated = true;
                         }
                     }
                 }
                 if(Gdx.input.isKeyPressed(Input.Keys.LEFT)){
-                    if(this.getX() >= 0 && this.getX() < Gdx.graphics.getWidth() / 2 - this.getWidth() / 2){
+                    if(this.getX() >= 0 && this.getX() < screenWidth / 2 - this.getWidth() / 2){
                         if (this.getX() >= 5){
                             this.setPosition(getX() - 5, getY());
                         }

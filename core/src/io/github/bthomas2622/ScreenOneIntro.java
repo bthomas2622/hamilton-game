@@ -32,8 +32,8 @@ public class ScreenOneIntro implements Screen {
 
     public ScreenOneIntro(final HamiltonGame gam){
         game = gam;
-        stage = new Stage(new FitViewport(1920, 1080));
-        hurricaneWritings = new IntroWritings(hurricaneIntro);
+        stage = new Stage(new FitViewport(game.aspectX, game.aspectY));
+        hurricaneWritings = new IntroWritings(hurricaneIntro, game);
         stage.addActor(hurricaneWritings);
     }
 

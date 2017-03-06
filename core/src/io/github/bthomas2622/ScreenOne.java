@@ -28,22 +28,25 @@ public class ScreenOne implements Screen, InputProcessor {
     float fadeAlpha = 0.0f;
     HamiltonActor hamilton;
     HamiltonWritings hurricaneWritings;
+    DeskActor desk;
 
 
     public ScreenOne(final HamiltonGame gam){
         game = gam;
-        stage = new Stage(new FitViewport(1920, 1080));
+        stage = new Stage(new FitViewport(game.aspectX, game.aspectY));
         Gdx.input.setInputProcessor(stage);
         hamilton = new HamiltonActor(game);
+        desk = new DeskActor(game);
         writings.add(writingInfo);
         writings.add(firstSentence);
         writings.add(paragraph1a);
         writings.add(paragraph1b);
         writings.add(closingParagraphA);
         writings.add(closingParagraphB);
-        hurricaneWritings = new HamiltonWritings(writings);
+        hurricaneWritings = new HamiltonWritings(writings, game);
         stage.addActor(hamilton);
         stage.addActor(hurricaneWritings);
+        stage.addActor(desk);
         Gdx.input.setInputProcessor(this);
     }
 

@@ -15,6 +15,7 @@ import com.badlogic.gdx.utils.TimeUtils;
  */
 
 public class IntroWritings extends Actor {
+    final HamiltonGame game;
     //font variables
     FreeTypeFontGenerator generator;
     FreeTypeFontGenerator.FreeTypeFontParameter parameter;
@@ -29,14 +30,19 @@ public class IntroWritings extends Actor {
     float alpha = 1f;
     boolean introFinished = false;
     float textFieldWidth = 1000f;
+    float screenWidth;
+    float screenHeight;
 
-    public IntroWritings(String intro){
+    public IntroWritings(String intro, final HamiltonGame gam){
+        game = gam;
+        screenHeight = game.aspectY;
+        screenWidth = game.aspectX;
+        textFieldWidth = game.aspectX / 1.92f;
         this.intro = intro;
         System.out.println("test");
         generator = new FreeTypeFontGenerator(Gdx.files.internal("JustAnotherHand.ttf"));
         parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
         parameter.size = 40;
-        //parameter.color = Color.WHITE;
         parameter.color = Color.WHITE;
         parameter.color.a = alpha;
         gameFont = generator.generateFont(parameter);
@@ -73,7 +79,7 @@ public class IntroWritings extends Actor {
 
     @Override
     public void draw(Batch batch, float alpha) {
-        gameFont.draw(batch, introStaggered, Gdx.graphics.getWidth()/6, Gdx.graphics.getHeight() - Gdx.graphics.getHeight()/6, textFieldWidth, 8, true);
+        gameFont.draw(batch, introStaggered, screenWidth/6, screenHeight - screenHeight/6, textFieldWidth, 8, true);
     }
 
     public boolean getIntroFinished(){

@@ -27,13 +27,13 @@ public class ScreenTwo implements Screen, InputProcessor {
 
     public ScreenTwo(final HamiltonGame gam){
         game = gam;
-        stage = new Stage(new FitViewport(1920, 1080));
+        stage = new Stage(new FitViewport(game.aspectX, game.aspectY));
         Gdx.input.setInputProcessor(stage);
         hamilton = new HamiltonActor(game);
         restOfWritings.add(paragraph0);
         restOfWritings.add(paragraph1);
         restOfWritings.add(paragraph2);
-        tbdWritings = new HamiltonWritings(restOfWritings);
+        tbdWritings = new HamiltonWritings(restOfWritings, game);
         stage.addActor(hamilton);
         stage.addActor(tbdWritings);
         Gdx.input.setInputProcessor(this);

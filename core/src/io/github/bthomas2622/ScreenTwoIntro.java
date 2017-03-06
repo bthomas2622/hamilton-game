@@ -18,8 +18,8 @@ public class ScreenTwoIntro implements Screen {
 
     public ScreenTwoIntro(final HamiltonGame gam){
         game = gam;
-        stage = new Stage(new FitViewport(1920, 1080));
-        tbdWritings = new IntroWritings(tbdIntro);
+        stage = new Stage(new FitViewport(game.aspectX, game.aspectY));
+        tbdWritings = new IntroWritings(tbdIntro, game);
         stage.addActor(tbdWritings);
     }
 

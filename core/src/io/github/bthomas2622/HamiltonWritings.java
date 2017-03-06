@@ -15,6 +15,7 @@ import com.badlogic.gdx.utils.Array;
 
 public class HamiltonWritings extends Actor {
     //font variables
+    final HamiltonGame game;
     FreeTypeFontGenerator generator;
     FreeTypeFontGenerator.FreeTypeFontParameter parameter;
     GlyphLayout glyphLayout;
@@ -24,14 +25,20 @@ public class HamiltonWritings extends Actor {
     int numberOfParagraphs;
     float paragraphWidth;
     float textFieldWidth = 500f;
+    float screenWidth;
+    float screenHeight;
 
-    public HamiltonWritings(Array<String> totalWork){
-        System.out.println("test");
+    public HamiltonWritings(Array<String> totalWork, final HamiltonGame gam){
+        game = gam;
+        screenWidth = game.aspectX;
+        screenHeight = game.aspectY;
+        textFieldWidth = screenWidth / 3.84f;
+        //System.out.println("test");
         this.totalWork = totalWork;
         numberOfParagraphs = totalWork.size - 1;
         generator = new FreeTypeFontGenerator(Gdx.files.internal("GentiumBookBasicBoldItalic.ttf"));
         parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
-        parameter.size = 18;
+        parameter.size = 30;
         parameter.color = Color.BLACK;
         gameFont = generator.generateFont(parameter);
         //generating a glyph layout to get the length of the string so i can center it
@@ -43,17 +50,11 @@ public class HamiltonWritings extends Actor {
     @Override
     public void act(float delta){
         super.act(delta);
-//            if(Gdx.input.isKeyPressed(int key){
-//
-//                if(this.getX() < Gdx.graphics.getWidth() / 2){
-//                    this.setPosition(getX() + 5, getY());
-//                }
-//            }
     }
 
     @Override
     public void draw(Batch batch, float alpha) {
-        gameFont.draw(batch, totalWork.get(currentParagraph), Gdx.graphics.getWidth()/2 - textFieldWidth/2, Gdx.graphics.getHeight() - Gdx.graphics.getHeight()/6, textFieldWidth, 8, true);
+        gameFont.draw(batch, totalWork.get(currentParagraph), screenWidth/2 - textFieldWidth/2, screenHeight - screenHeight/6, textFieldWidth, 8, true);
     }
 
     public void checkTyped(char character){
