@@ -1,6 +1,7 @@
 package io.github.bthomas2622;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
@@ -27,6 +28,7 @@ public class HamiltonWritings extends Actor {
     float textFieldWidth = 500f;
     float screenWidth;
     float screenHeight;
+    boolean screenFinished = false;
 
     public HamiltonWritings(Array<String> totalWork, final HamiltonGame gam){
         game = gam;
@@ -38,7 +40,7 @@ public class HamiltonWritings extends Actor {
         numberOfParagraphs = totalWork.size - 1;
         generator = new FreeTypeFontGenerator(Gdx.files.internal("PatrickHand-Regular.ttf"));
         parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
-        System.out.println(screenWidth);
+//        System.out.println(screenWidth);
         parameter.size = (int)(screenWidth / 102.4f);
         parameter.borderColor = Color.BLACK;
         parameter.borderWidth = .5f;
@@ -53,6 +55,9 @@ public class HamiltonWritings extends Actor {
     @Override
     public void act(float delta){
         super.act(delta);
+        if(Gdx.input.isKeyPressed(Input.Keys.UP)){
+            screenFinished = true;
+        }
     }
 
     @Override
@@ -89,6 +94,10 @@ public class HamiltonWritings extends Actor {
 
     public int getCurrentParagraph(){
         return currentParagraph;
+    }
+
+    public boolean getScreenFinished(){
+        return screenFinished;
     }
 
     public void dispose(){

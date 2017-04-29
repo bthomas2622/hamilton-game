@@ -69,15 +69,8 @@ public class ScreenOne implements Screen, InputProcessor {
         if (hamilton.getSeated() && hurricaneWritings.getCurrentParagraph() == 0){
             hurricaneWritings.nextParagraph();
         }
-        if (hamilton.getSeated()){
-            if (Gdx.input.isKeyJustPressed(Input.Keys.DOWN)){
-                if (hurricaneWritings.nextParagraph()){
-
-                }
-            }
-            if (Gdx.input.isKeyJustPressed(Input.Keys.UP)) {
-                hamilton.setNextScreen(true);
-            }
+        if (hurricaneWritings.getScreenFinished()){
+            hamilton.setNextScreen(true);
         }
         stage.draw();
     }

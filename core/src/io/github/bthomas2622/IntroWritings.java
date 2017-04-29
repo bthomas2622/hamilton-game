@@ -39,7 +39,7 @@ public class IntroWritings extends Actor {
         screenWidth = game.aspectX;
         textFieldWidth = game.aspectX / 1.92f;
         this.intro = intro;
-        System.out.println("test");
+//        System.out.println("test");
         generator = new FreeTypeFontGenerator(Gdx.files.internal("JustAnotherHand.ttf"));
         parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
         parameter.size = 40;

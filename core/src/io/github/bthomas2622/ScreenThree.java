@@ -10,10 +10,10 @@ import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 
 /**
- * Created by bthom on 2/10/2017.
+ * Created by bthom on 4/29/2017.
  */
 
-public class ScreenTwo implements Screen, InputProcessor {
+public class ScreenThree implements Screen, InputProcessor {
     final HamiltonGame game;
     private Stage stage;
     String paragraph0 = "This is a test. This is a test.";
@@ -25,7 +25,7 @@ public class ScreenTwo implements Screen, InputProcessor {
     HamiltonWritings tbdWritings;
 
 
-    public ScreenTwo(final HamiltonGame gam){
+    public ScreenThree(final HamiltonGame gam){
         game = gam;
         stage = new Stage(new FitViewport(game.aspectX, game.aspectY));
         Gdx.input.setInputProcessor(stage);
@@ -51,7 +51,7 @@ public class ScreenTwo implements Screen, InputProcessor {
         if (hamilton.getNextScreen() && fadeAlpha < 1f){
             fadeAlpha += .01f;
             if (fadeAlpha >= 1f){
-                game.setScreen(new ScreenThreeIntro(game));
+                game.setScreen(new ScreenOneIntro(game));
             }
         }
         //Start the writing when hamilton sits down
