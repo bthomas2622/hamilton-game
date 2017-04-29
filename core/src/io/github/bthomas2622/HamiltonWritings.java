@@ -36,9 +36,12 @@ public class HamiltonWritings extends Actor {
         //System.out.println("test");
         this.totalWork = totalWork;
         numberOfParagraphs = totalWork.size - 1;
-        generator = new FreeTypeFontGenerator(Gdx.files.internal("GentiumBookBasicBoldItalic.ttf"));
+        generator = new FreeTypeFontGenerator(Gdx.files.internal("PatrickHand-Regular.ttf"));
         parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
-        parameter.size = 30;
+        System.out.println(screenWidth);
+        parameter.size = (int)(screenWidth / 102.4f);
+        parameter.borderColor = Color.BLACK;
+        parameter.borderWidth = .5f;
         parameter.color = Color.BLACK;
         gameFont = generator.generateFont(parameter);
         //generating a glyph layout to get the length of the string so i can center it
