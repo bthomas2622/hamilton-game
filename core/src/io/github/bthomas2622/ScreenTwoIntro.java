@@ -13,13 +13,13 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 public class ScreenTwoIntro implements Screen {
     final HamiltonGame game;
     private Stage stage;
-    String tbdIntro = "The second journey begins. \nThis is a new line                              ";
+    String vindicationIntro = "Hamilton reached the thirteen colonies of North America in October, 1772. He never did return to the caribbean. Hamilton studied at Elizabethtown Academy, a grammar school in New Jersey, before gaining acceptance to The King’s College (now Columbia University) in NYC at the age of 17. Hamilton ascended rapidly, gaining a reputation as both an intellectual and impassioned advocate for patriot grievances. In 1774, Church of England clergyman “A. W. Farmer” (later identified Samuel Seabury) published a series of pamphlets promoting the Loyalist cause. Hamilton responded with \"A Full Vindication of the Measures of Congress\" and later \"The Farmer Refuted\". These first anonymously published political essays were just the beginning. Alexander Hamilton would become the most prolific and influential political writer of the era.";
     IntroWritings tbdWritings;
 
     public ScreenTwoIntro(final HamiltonGame gam){
         game = gam;
         stage = new Stage(new FitViewport(game.aspectX, game.aspectY));
-        tbdWritings = new IntroWritings(tbdIntro, game);
+        tbdWritings = new IntroWritings(vindicationIntro, game);
         stage.addActor(tbdWritings);
     }
 
