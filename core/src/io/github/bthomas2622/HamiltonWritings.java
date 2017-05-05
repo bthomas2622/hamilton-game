@@ -23,12 +23,16 @@ public class HamiltonWritings extends Actor {
     Array<String> totalWork;
     BitmapFont gameFont;
     int currentParagraph = 0;
+    String typed = "[BLUE]";
+    String nontyped;
     int numberOfParagraphs;
+    int currentLetter;
     float paragraphWidth;
     float textFieldWidth = 500f;
     float screenWidth;
     float screenHeight;
     boolean screenFinished = false;
+    boolean notStarted = true;
 
     public HamiltonWritings(Array<String> totalWork, final HamiltonGame gam){
         game = gam;
@@ -44,13 +48,18 @@ public class HamiltonWritings extends Actor {
         parameter.size = (int)(screenWidth / 102.4f);
         parameter.borderColor = Color.BLACK;
         parameter.borderWidth = .5f;
-        parameter.color = Color.BLACK;
+        //parameter.color = Color.BLACK;
         gameFont = generator.generateFont(parameter);
         //generating a glyph layout to get the length of the string so i can center it
         glyphLayout = new GlyphLayout();;
         glyphLayout.setText(gameFont,totalWork.get(currentParagraph));
         paragraphWidth = glyphLayout.width;
-
+        gameFont.getData().markupEnabled = true;
+        currentLetter = 13;
+        for( int i = 0; i < totalWork.size - 1; i++)
+        {
+            totalWork.set(i, "[BLUE][BLACK]" + totalWork.get(i));
+        }
     }
     @Override
     public void act(float delta){
@@ -66,8 +75,25 @@ public class HamiltonWritings extends Actor {
     }
 
     public void checkTyped(char character){
-        if (String.valueOf(totalWork.get(currentParagraph).charAt(0)).toLowerCase().equals(String.valueOf(character).toLowerCase())) {
-            totalWork.set(currentParagraph, totalWork.get(currentParagraph).substring(1));
+        if (String.valueOf(totalWork.get(currentParagraph).charAt(currentLetter)).toLowerCase().equals(String.valueOf(character).toLowerCase())) {
+            typed = typed.concat(String.valueOf(totalWork.get(currentParagraph).charAt(currentLetter)));
+            nontyped = nontyped.substring(0, 7) + nontyped.substring(8);
+            if (notStarted){
+                totalWork.set(currentParagraph, totalWork.get(currentParagraph).substring(13));
+                notStarted = false;
+                System.out.println("removed");
+                System.out.println("new current paragraph: " + totalWork.get(currentParagraph));
+            }
+            System.out.println("typed");
+            System.out.println(typed);
+            System.out.println("nontyped");
+            System.out.println(nontyped);
+            System.out.println(currentLetter);
+            currentLetter++;
+            totalWork.set(currentParagraph, typed + nontyped);
+
+            //old method that removed the typed letter
+            //totalWork.set(currentParagraph, totalWork.get(currentParagraph).substring(1));
         }
     }
 
@@ -76,6 +102,9 @@ public class HamiltonWritings extends Actor {
             return true;
         } else {
             currentParagraph++;
+            notStarted = true;
+            nontyped = "[BLACK]".concat(totalWork.get(currentParagraph).substring(13));
+            System.out.println(nontyped);
             return false;
         }
     }
