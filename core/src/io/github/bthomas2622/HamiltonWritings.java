@@ -33,6 +33,8 @@ public class HamiltonWritings extends Actor {
     float screenHeight;
     boolean screenFinished = false;
     boolean notStarted = true;
+    int paragraphLength;
+    boolean paragraphFinished = false;
 
     public HamiltonWritings(Array<String> totalWork, final HamiltonGame gam){
         game = gam;
@@ -56,16 +58,18 @@ public class HamiltonWritings extends Actor {
         paragraphWidth = glyphLayout.width;
         gameFont.getData().markupEnabled = true;
         currentLetter = 13;
-        for( int i = 0; i < totalWork.size - 1; i++)
+        for( int i = 0; i < totalWork.size; i++)
         {
             totalWork.set(i, "[BLUE][BLACK]" + totalWork.get(i));
+            System.out.println(totalWork.get(i));
         }
     }
     @Override
     public void act(float delta){
         super.act(delta);
-        if(Gdx.input.isKeyPressed(Input.Keys.UP)){
-            screenFinished = true;
+        if(Gdx.input.isKeyJustPressed(Input.Keys.UP)){
+            //screenFinished = true;
+            this.nextParagraph();
         }
     }
 
@@ -79,38 +83,49 @@ public class HamiltonWritings extends Actor {
             typed = typed.concat(String.valueOf(totalWork.get(currentParagraph).charAt(currentLetter)));
             nontyped = nontyped.substring(0, 7) + nontyped.substring(8);
             if (notStarted){
+                paragraphFinished = false;
+                paragraphLength = totalWork.get(currentParagraph).length();
                 totalWork.set(currentParagraph, totalWork.get(currentParagraph).substring(13));
                 notStarted = false;
                 System.out.println("removed");
                 System.out.println("new current paragraph: " + totalWork.get(currentParagraph));
             }
-            System.out.println("typed");
-            System.out.println(typed);
-            System.out.println("nontyped");
-            System.out.println(nontyped);
-            System.out.println(currentLetter);
+//            System.out.println("typed");
+//            System.out.println(typed);
+//            System.out.println("nontyped");
+//            System.out.println(nontyped);
+//            System.out.println(currentLetter);
             currentLetter++;
             totalWork.set(currentParagraph, typed + nontyped);
-
+            System.out.println("typed length: " + typed.length());
+            System.out.println("paragraph length: " + paragraphLength);
+            if (typed.length()+7 == paragraphLength){
+                paragraphFinished = true;
+            }
             //old method that removed the typed letter
             //totalWork.set(currentParagraph, totalWork.get(currentParagraph).substring(1));
         }
     }
 
     public boolean nextParagraph(){
+        System.out.println("cp: " + currentParagraph);
+        System.out.println("nop: " + numberOfParagraphs);
         if (currentParagraph == numberOfParagraphs){
             return true;
         } else {
             currentParagraph++;
+            currentLetter = 13;
+            paragraphFinished = false;
             notStarted = true;
+            typed = "[BLUE]";
             nontyped = "[BLACK]".concat(totalWork.get(currentParagraph).substring(13));
             System.out.println(nontyped);
             return false;
         }
     }
 
-    public String getVisibleWriting(){
-        return totalWork.get(currentParagraph);
+    public boolean getWritingStatus(){
+        return paragraphFinished;
     }
 
     public void setTotalWork(Array<String> totalWork){

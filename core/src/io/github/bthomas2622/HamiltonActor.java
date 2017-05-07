@@ -34,9 +34,12 @@ public class HamiltonActor extends Actor {
         if (seated){
         } else {
             if (finished){
+                //System.out.println("test1");
                 if(Gdx.input.isKeyPressed(Input.Keys.RIGHT)){
-                    if(this.getX() >= screenWidth / 2  - this.getWidth() / 2 && this.getX() < screenWidth  + this.getWidth()){
-                        if (this.getX() <= screenWidth + this.getWidth() - 5){
+                    //System.out.println("test2");
+                    if(this.getX() >= screenWidth / 2  - this.getWidth() / 2){
+                        //System.out.println("test3");
+                        if (this.getX() < screenWidth + this.getWidth() - 5){
                             this.setPosition(getX() + 5, getY());
                         }
                         else {

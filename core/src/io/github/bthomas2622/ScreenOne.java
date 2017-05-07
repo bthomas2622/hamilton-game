@@ -92,7 +92,7 @@ public class ScreenOne implements Screen, InputProcessor {
     @Override
     public boolean keyTyped(char character) {
         if (hamilton.getSeated() == true){
-            if (hurricaneWritings.getVisibleWriting().equals("")){
+            if (hurricaneWritings.getWritingStatus()){
                 if (hurricaneWritings.nextParagraph()){
                     hamilton.setFinished(true);
                     hamilton.setSeated(false);

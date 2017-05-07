@@ -81,7 +81,7 @@ public class ScreenThree implements Screen, InputProcessor {
     @Override
     public boolean keyTyped(char character) {
         if (hamilton.getSeated() == true){
-            if (tbdWritings.getVisibleWriting().equals("")){
+            if (tbdWritings.getWritingStatus()){
                 if (tbdWritings.nextParagraph()){
                     hamilton.setFinished(true);
                     hamilton.setSeated(false);

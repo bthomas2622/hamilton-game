@@ -92,7 +92,7 @@ public class ScreenTwo implements Screen, InputProcessor {
     @Override
     public boolean keyTyped(char character) {
         if (hamilton.getSeated() == true){
-            if (vindicationWritings.getVisibleWriting().equals("")){
+            if (vindicationWritings.getWritingStatus()){
                 if (vindicationWritings.nextParagraph()){
                     hamilton.setFinished(true);
                     hamilton.setSeated(false);
